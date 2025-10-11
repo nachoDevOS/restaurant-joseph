@@ -281,8 +281,6 @@ class CashierController extends Controller
                     }])
                     ->where('id', $id)
                     ->first();
-        return $cashier;
-
 
         return view('cashiers.print-close-details', compact('cashier',));
     }
