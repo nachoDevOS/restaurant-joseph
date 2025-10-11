@@ -7,7 +7,7 @@ async function printTicket(url, sale, fallbackUrl) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 2000); // Timeout de 2 segundos
 
-    window.open(`${fallbackUrl}/${sale.id}`, "Recibo", `width=700, height=700`)
+    // window.open(`${fallbackUrl}/${sale.id}`, "Recibo", `width=700, height=700`)
 
     try {
         // Intenta alcanzar el servicio. 'no-cors' es para una simple verificación de conectividad.
