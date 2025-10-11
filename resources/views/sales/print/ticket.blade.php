@@ -207,9 +207,9 @@
         });
 
         // Cerrar la ventana después de imprimir (o si se cancela la impresión)
-        window.onafterprint = function() {
-            window.close();
-        }
+        // window.onafterprint = function() {
+        //     window.close();
+        // }
     </script>
 </body>
 </html>
