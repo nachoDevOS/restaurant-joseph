@@ -846,7 +846,7 @@
             if (!$productCard.length) return null;
             return {
                 id: productId,
-                name: $productCard.find('h5').first().text().trim(),
+                name: $productCard.find('.product-name').first().text().trim(),
                 price: parseFloat($productCard.find('.text-success').text().replace('Bs. ', '').replace(',', '.')),
                 image: $productCard.find('img').attr('src')
             };
