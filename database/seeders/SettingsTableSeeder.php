@@ -68,7 +68,7 @@ class SettingsTableSeeder extends Seeder
                 'id' => 6,
                 'key' => 'admin.title',
                 'display_name' => 'Título del administrador',
-                'value' => 'SIN TENEDOR',
+                'value' => 'RESTAURANT JOSEPH',
                 'details' => '',
                 'type' => 'text',
                 'order' => 1,
@@ -134,7 +134,7 @@ class SettingsTableSeeder extends Seeder
                 'id' => 18,
                 'key' => 'system.code',
                 'display_name' => 'Código',
-                'value' => 'https://sintenedor.soluciondigital.dev',
+                'value' => 'https://restaurantjoseph.soluciondigital.dev',
                 'details' => NULL,
                 'type' => 'text',
                 'order' => 6,
@@ -172,6 +172,17 @@ class SettingsTableSeeder extends Seeder
                 'type' => 'text',
                 'order' => 9,
                 'group' => 'Company',
+            ),
+            14 => 
+            array (
+                'id' => 22,
+                'key' => 'servidores.print',
+                'display_name' => 'Print',
+                'value' => 'http://localhost:3050',
+                'details' => NULL,
+                'type' => 'text',
+                'order' => 10,
+                'group' => 'Servidores',
             ),
         ));
         

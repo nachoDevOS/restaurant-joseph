@@ -247,23 +247,23 @@ class MenuItemsTableSeeder extends Seeder
             array (
                 'id' => 19,
                 'menu_id' => 1,
-                'title' => 'Categorías',
+                'title' => 'Categorías de Productos',
                 'url' => '',
                 'target' => '_self',
                 'icon_class' => 'fa-solid fa-layer-group',
-                'color' => NULL,
+                'color' => '#000000',
                 'parent_id' => 20,
                 'order' => 1,
                 'created_at' => '2025-05-26 10:01:28',
-                'updated_at' => '2025-05-26 10:10:42',
+                'updated_at' => '2025-10-12 08:29:40',
                 'route' => 'voyager.categories.index',
-                'parameters' => NULL,
+                'parameters' => 'null',
             ),
             15 => 
             array (
                 'id' => 20,
                 'menu_id' => 1,
-                'title' => 'Parámetro de Ventas',
+                'title' => 'Parámetro',
                 'url' => '',
                 'target' => '_self',
                 'icon_class' => 'voyager-params',
@@ -271,7 +271,7 @@ class MenuItemsTableSeeder extends Seeder
                 'parent_id' => NULL,
                 'order' => 7,
                 'created_at' => '2025-05-26 10:10:27',
-                'updated_at' => '2025-10-06 19:57:58',
+                'updated_at' => '2025-10-12 08:29:10',
                 'route' => NULL,
                 'parameters' => '',
             ),
@@ -357,22 +357,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             21 => 
             array (
-                'id' => 28,
-                'menu_id' => 1,
-                'title' => 'Egresos del Almacen',
-                'url' => '',
-                'target' => '_self',
-                'icon_class' => 'fa-solid fa-cart-shopping',
-                'color' => '#000000',
-                'parent_id' => NULL,
-                'order' => 5,
-                'created_at' => '2025-06-02 07:38:47',
-                'updated_at' => '2025-10-06 19:57:58',
-                'route' => 'egres-inventories.index',
-                'parameters' => NULL,
-            ),
-            22 => 
-            array (
                 'id' => 29,
                 'menu_id' => 1,
                 'title' => 'Reportes de Ventas',
@@ -387,7 +371,7 @@ class MenuItemsTableSeeder extends Seeder
                 'route' => NULL,
                 'parameters' => '',
             ),
-            23 => 
+            22 => 
             array (
                 'id' => 30,
                 'menu_id' => 1,
@@ -403,7 +387,7 @@ class MenuItemsTableSeeder extends Seeder
                 'route' => 'report-sales-stock.index',
                 'parameters' => 'null',
             ),
-            24 => 
+            23 => 
             array (
                 'id' => 31,
                 'menu_id' => 1,
@@ -419,7 +403,7 @@ class MenuItemsTableSeeder extends Seeder
                 'route' => 'report-sales.index',
                 'parameters' => 'null',
             ),
-            25 => 
+            24 => 
             array (
                 'id' => 32,
                 'menu_id' => 1,
@@ -435,7 +419,7 @@ class MenuItemsTableSeeder extends Seeder
                 'route' => 'report-sales-income.index',
                 'parameters' => 'null',
             ),
-            26 => 
+            25 => 
             array (
                 'id' => 33,
                 'menu_id' => 1,
@@ -451,7 +435,7 @@ class MenuItemsTableSeeder extends Seeder
                 'route' => NULL,
                 'parameters' => '',
             ),
-            27 => 
+            26 => 
             array (
                 'id' => 34,
                 'menu_id' => 1,
@@ -467,7 +451,7 @@ class MenuItemsTableSeeder extends Seeder
                 'route' => 'report-inventories-income.index',
                 'parameters' => 'null',
             ),
-            28 => 
+            27 => 
             array (
                 'id' => 35,
                 'menu_id' => 1,
@@ -483,7 +467,7 @@ class MenuItemsTableSeeder extends Seeder
                 'route' => 'report-inventories-stock.index',
                 'parameters' => 'null',
             ),
-            29 => 
+            28 => 
             array (
                 'id' => 36,
                 'menu_id' => 1,
@@ -499,7 +483,7 @@ class MenuItemsTableSeeder extends Seeder
                 'route' => 'report-inventories-egres.index',
                 'parameters' => 'null',
             ),
-            30 => 
+            29 => 
             array (
                 'id' => 37,
                 'menu_id' => 1,
@@ -515,7 +499,7 @@ class MenuItemsTableSeeder extends Seeder
                 'route' => 'vaults.index',
                 'parameters' => NULL,
             ),
-            31 => 
+            30 => 
             array (
                 'id' => 38,
                 'menu_id' => 1,
@@ -529,6 +513,22 @@ class MenuItemsTableSeeder extends Seeder
                 'created_at' => '2025-10-06 19:57:47',
                 'updated_at' => '2025-10-06 19:57:58',
                 'route' => 'cashiers.index',
+                'parameters' => NULL,
+            ),
+            31 => 
+            array (
+                'id' => 40,
+                'menu_id' => 1,
+                'title' => 'Categorías de Gastos',
+                'url' => '',
+                'target' => '_self',
+                'icon_class' => 'fa-solid fa-layer-group',
+                'color' => NULL,
+                'parent_id' => 20,
+                'order' => 3,
+                'created_at' => '2025-10-12 08:28:44',
+                'updated_at' => '2025-10-12 08:29:04',
+                'route' => 'voyager.category-expenses.index',
                 'parameters' => NULL,
             ),
         ));

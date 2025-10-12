@@ -50,7 +50,7 @@ class PermissionsTableSeeder extends Seeder
 
         Permission::generateFor('users');
 
-        // Permission::generateFor('posts');
+        Permission::generateFor('category_expenses');
         // Permission::generateFor('pages');
 
         $permissions = [
@@ -126,7 +126,7 @@ class PermissionsTableSeeder extends Seeder
             Permission::firstOrCreate([
                 'key'        => $key,
                 'keyDescription'=> $description,
-                'table_name' => 'egres_inventories',
+                'table_name' => 'egres-inventories',
                 'tableDescription'=>'Egreso de Almacén'
             ]);
         }

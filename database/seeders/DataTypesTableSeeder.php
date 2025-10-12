@@ -217,6 +217,24 @@ class DataTypesTableSeeder extends Seeder
                 'created_at' => '2025-05-29 13:21:40',
                 'updated_at' => '2025-05-29 14:46:05',
             ),
+            11 => 
+            array (
+                'id' => 18,
+                'name' => 'category_expenses',
+                'slug' => 'category-expenses',
+                'display_name_singular' => 'Categoría de Gasto',
+                'display_name_plural' => 'Categorías de Gastos',
+                'icon' => 'fa-solid fa-layer-group',
+                'model_name' => 'App\\Models\\CategoryExpense',
+                'policy_name' => NULL,
+                'controller' => NULL,
+                'description' => NULL,
+                'generate_permissions' => 1,
+                'server_side' => 0,
+                'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null}',
+                'created_at' => '2025-10-12 08:28:44',
+                'updated_at' => '2025-10-12 08:28:44',
+            ),
         ));
         
         

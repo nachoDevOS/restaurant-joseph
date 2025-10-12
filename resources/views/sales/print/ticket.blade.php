@@ -187,7 +187,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Imprimir automáticamente al cargar la página
-            window.print();
+            // window.print();
         });
         
         // Control de teclado para impresión y cierre
