@@ -71,7 +71,8 @@ class Controller extends BaseController
                             ->with(['saleTransactions' => function($q) {
                                 $q->where('deleted_at', NULL);
                             }]);
-                        },
+                        },'expenses.categoryExpense'
+
                     ])
                     ->whereRaw($id?$query:1)
                     ->where('deleted_at', null)
@@ -105,7 +106,7 @@ class Controller extends BaseController
                 })
                 ->sum();
 
-            $cashierOut =0;
+            $cashierOut = $cashier->expenses->where('deleted_at', null)->sum('amount');
 
 
 

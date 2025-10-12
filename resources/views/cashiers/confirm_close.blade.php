@@ -31,7 +31,7 @@
                     <div class="row">
                         @php
                             $cashierIn = $cashier->movements->where('type', 'ingreso')->where('deleted_at', NULL)->where('status', 'Aceptado')->sum('amount');
-                            $cashierOut =0;
+                            $cashierOut = $cashier->expenses->where('deleted_at', null)->sum('amount');
 
                             $paymentEfectivo = $cashier->sales
                                 ->flatMap(function($sale) {

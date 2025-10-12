@@ -165,7 +165,7 @@
                                         </div>
                                         @if ($globalFuntion_cashier->status == 'abierta')
                                             <div class="col-md-6 text-right">
-                                                <a href="#" data-toggle="modal" data-target="#agregar-gasto-modal"
+                                                <a href="#" data-toggle="modal" data-target="#modal-create-expense"
                                                     title="Agregar Gastos" class="btn btn-success">Gastos <i
                                                         class="fa-solid fa-money-bill-transfer"></i></a>
                                                 {{-- <a  href="#" data-toggle="modal" data-target="#modal_transfer_moneyCashier" title="Transferir Dinero" class="btn btn-success">Traspaso <i class="fa-solid fa-money-bill-transfer"></i></a> --}}
@@ -211,6 +211,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('partials.modal-registerExpense')
 
 
                 @else

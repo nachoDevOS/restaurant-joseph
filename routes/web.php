@@ -8,6 +8,7 @@ use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\EgresInventoryController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ItemInventoryController;
 use App\Http\Controllers\ItemSaleController;
 use App\Http\Controllers\ReportInventoryController;
@@ -92,6 +93,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['loggin', 'system']], functi
 
     // Route::delete('cashiers/{cashier}/sale/{saleAgent}/delete', [CashierController::class, 'cashierSaleDelete'])->name('cashier-sale.delete');//Para eliminar una venta al contado y credito como eliminar pagos al credito de una caja abierta
 
+    Route::resource('expeses', ExpenseController::class);
 
 
 

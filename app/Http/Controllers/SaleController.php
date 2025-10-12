@@ -123,16 +123,18 @@ class SaleController extends Controller
     {
         $this->custom_authorize('add_sales');
         $categories = Category::with([
-            'itemSales' => function ($query) {
-                $query
-                    ->where('deleted_at', null) // Solo productos en ventas activos
-                    ->with([
-                        'itemSalestocks' => function ($q) {
-                            $q->where('deleted_at', null);
-                        },
-                    ]);
-            },
-        ])->get();
+                    'itemSales' => function ($query) {
+                        $query
+                            ->where('deleted_at', null) // Solo productos en ventas activos
+                            ->where('status', 1)
+                            ->with([
+                                'itemSalestocks' => function ($q) {
+                                    $q->where('deleted_at', null);
+                                },
+                            ]);
+                    },
+                ])
+                ->get();
 
         $cashier = $this->cashier('user', Auth::user()->id, 'status = "abierta"');
 
@@ -275,9 +277,10 @@ class SaleController extends Controller
             return redirect()
                 ->route('sales.index')
                 ->with(['message' => 'Registrado exitosamente.', 'alert-type' => 'success', 'sale' => $sale]);
-        } catch (\Throwable $e) {
+        } catch (\Throwable $th) {
             DB::rollBack();
-            return 0;
+            $this->logError($th, $request);
+
             return redirect()
                 ->route('sales.index')
                 ->with(['message' => 'Ocurrió un error.', 'alert-type' => 'error']);
@@ -407,10 +410,12 @@ class SaleController extends Controller
                 ->route('sales.index')
                 ->with(['message' => 'Venta actualizada exitosamente.', 'alert-type' => 'success']);
 
-        } catch (\Throwable $e) {
+        } catch (\Throwable $th) {
             DB::rollBack();
-            \Log::error("Error al actualizar venta: " . $e->getMessage());
+            // \Log::error("Error al actualizar venta: " . $e->getMessage());
             // return 0;
+            $this->logError($th, $request);
+
             return redirect()
                 ->route('sales.edit', ['sale' => $id])
                 ->with(['message' => 'Ocurrió un error al actualizar la venta.', 'alert-type' => 'error']);

@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Person;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use App\Traits\Loggable;
+
 
 class PersonController extends Controller
 {
+    use Loggable;
     public $storageController;
     public function __construct()
     {
@@ -79,6 +82,7 @@ class PersonController extends Controller
             return redirect()->route('voyager.people.index')->with(['message' => 'Registrado exitosamente', 'alert-type' => 'success']);
         } catch (\Throwable $th) {
             DB::rollback();
+            $this->logError($th, $request);
             return redirect()->route('voyager.people.index')->with(['message' => $th->getMessage(), 'alert-type' => 'error']);
         }
     }
@@ -118,6 +122,7 @@ class PersonController extends Controller
             return redirect()->route('voyager.people.index')->with(['message' => 'Actualizada exitosamente', 'alert-type' => 'success']);
         } catch (\Throwable $th) {
             DB::rollback();
+            $this->logError($th, $request);
             return redirect()->route('voyager.people.index')->with(['message' => $th->getMessage(), 'alert-type' => 'error']);
         }
     }

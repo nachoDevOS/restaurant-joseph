@@ -6,9 +6,11 @@ use App\Models\ItemSale;
 use App\Models\ItemSaleStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Traits\Loggable;
 
 class ItemSaleController extends Controller
 {
+    use Loggable;
     public $storageController;
     public function __construct()
     {
@@ -80,6 +82,7 @@ class ItemSaleController extends Controller
             return redirect()->route('voyager.item-sales.index')->with(['message' => 'Registrado exitosamente', 'alert-type' => 'success']);
         } catch (\Throwable $th) {
             DB::rollback();
+            $this->logError($th, $request);
             return redirect()->route('voyager.item-sales.index')->with(['message' => $th->getMessage(), 'alert-type' => 'error']);
         }
     }
@@ -113,6 +116,7 @@ class ItemSaleController extends Controller
             return redirect()->route('voyager.item-sales.index')->with(['message' => 'Actualizada exitosamente', 'alert-type' => 'success']);
         } catch (\Throwable $th) {
             DB::rollback();
+            $this->logError($th, $request);
             return redirect()->route('voyager.item-sales.index')->with(['message' => $th->getMessage(), 'alert-type' => 'error']);
         }
     }
@@ -146,8 +150,9 @@ class ItemSaleController extends Controller
             DB::commit();
             return redirect()->route('voyager.item-sales.show', ['id'=>$id])->with(['message' => 'Registrado exitosamente.', 'alert-type' => 'success']);
 
-        } catch (\Exception $e) {
+        } catch (\Exception $th) {
             DB::rollback();
+            $this->logError($th, $request);
             return redirect()->route('voyager.item-sales.show',  ['id'=>$id])->with(['message' => 'Ocurrió un error.', 'alert-type' => 'error']);
         } 
     }

@@ -511,7 +511,7 @@
                                             </th>
                                             <th style="text-align: right">
                                                 <small
-                                                    style="font-size: 15px">{{ number_format($globalFuntion_cashierMoney['paymentEfectivo'] + $globalFuntion_cashierMoney['cashierIn'], 2, ',', '.') }}</small>
+                                                    style="font-size: 15px">{{ number_format($globalFuntion_cashierMoney['amountCashier'], 2, ',', '.') }}</small>
                                             </th>
                                         </tr>
                                         <tr>

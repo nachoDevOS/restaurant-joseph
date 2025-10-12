@@ -42,6 +42,10 @@ class Cashier extends Model
         return $this->hasMany(Sale::class, 'cashier_id')->withTrashed();
     }
 
+    public function expenses(){
+        return $this->hasMany(Expense::class, 'cashier_id');
+    }
+
     public function details(){
         return $this->hasMany(CashierDetail::class);
     }

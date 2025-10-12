@@ -79,11 +79,11 @@
                             <table id="dataTable" class="table table-bordered table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>N&deg;</th>
+                                        <th style="text-align: center">N&deg;</th>
                                         <th style="text-align: center; width:15%">Fecha y Hora de Registro</th>
                                         <th style="text-align: center; width:30%">Registrado Por</th>
-                                        <th>Detalle</th>
-                                        <th style="text-align: center">Monto</th>
+                                        <th style="text-align: center">Detalle</th>
+                                        <th style="text-align: right">Monto</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -132,19 +132,91 @@
                 </div>
                 <div class="panel panel-bordered">
                     <div class="panel-body">
+                        <h3 id="h4">Gastos <label class="label label-danger">Egreso</label></h3>
+                        <div class="table-responsive">
+                            <table id="dataTable" class="table table-bordered table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center">N&deg;</th>
+                                        <th style="text-align: center">Tipo de Gasto</th>
+                                        <th style="text-align: center">Detalle</th>
+                                        <th style="text-align: center">Fecha</th>
+                                        <th style="text-align: right">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $count = 1;
+                                        $total_expense = 0;
+                                        $total_expense_deleted = 0;
+                                    @endphp
+                                    @forelse ($cashier->expenses as $item)
+                                        <tr
+                                            @if ($item->deleted_at) style="text-decoration: line-through; color: red;" @endif>
+                                            <td style="text-align: center; font-size: 11px">{{ $count }}</td>
+                                            <td style="font-size: 11px">                                              
+                                                {{ $item->categoryExpense->name }}
+                                            </td>
+                                            <td style="font-size: 11px">
+                                                {{$item->observation}}
+                                            </td>
+                                            <td style="text-align: center; font-size: 11px">
+                                                {{ date('d/m/Y h:i a', strtotime($item->dateSale)) }}
+                                            </td>
+
+                                            @php
+                                                if ($item->deleted_at == null) {
+                                                    $total_expense += $item->amount;
+                                                } else {
+                                                    $total_expense_deleted += $item->amount;
+                                                }
+                                            @endphp
+                                            <td class="text-right">{{ number_format($item->amount, 2, ',', '.') }}</td>
+
+
+                                        </tr>
+                                        @php
+                                            $count++;
+                                        @endphp
+                                    @empty
+                                        <tr>
+                                            <td style="text-align: center" colspan="5">No hay datos disponibles en la
+                                                tabla</td>
+                                        </tr>
+                                    @endempty
+                                    <tr>
+                                        <td colspan="4" class="text-right"><span class="text-danger"><b>GASTOS TOTAL
+                                                    ANULADO</b></span></td>
+                                        <td class="text-right"><b
+                                                class="text-danger">{{ number_format($total_expense_deleted, 2, ',', '.') }}</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" class="text-right"><b>GASTOS TOTAL VIGENTE</b></td>
+                                        <td class="text-right">
+                                            <b>{{ number_format($total_expense, 2, ',', '.') }}</b>
+                                        </td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="panel panel-bordered">
+                    <div class="panel-body">
                         <h3 id="h4">Ventas <label class="label label-success">Ingreso</label></h3>
                         <div class="table-responsive">
                             <table id="dataTable" class="table table-bordered table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>N&deg;</th>
-                                        <th>Código</th>
-                                        <th>Cliente</th>
-                                        <th>Fecha</th>
-                                        <th>Ticket</th>
-                                        <th>Pago Qr</th>
-                                        <th>Pago Efectivo</th>
-                                        <th>Total</th>
+                                        <th style="text-align: center">N&deg;</th>
+                                        <th style="text-align: center">Código</th>
+                                        <th style="text-align: center">Cliente</th>
+                                        <th style="text-align: center">Fecha</th>
+                                        <th style="text-align: center">Ticket</th>
+                                        <th style="text-align: right">Pago Qr</th>
+                                        <th style="text-align: right">Pago Efectivo</th>
+                                        <th style="text-align: right">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -282,19 +354,19 @@
                                     <td><h4>Prestamos entregados</h4></td>
                                     <td style="text-align: right"><h4>{{ number_format($loanCash+$pawnCash+$amountAditionalCash+$salaryPurchaseCash, 2, ',', '.') }}</h4></td>
                                 </tr> --}}
-                            {{-- <tr>
+                            <tr>
                                     <td><h4>Gastos realizados</h4></td>
-                                    <td style="text-align: right"><h4>{{ number_format($extraExpenseCash + $transferAmountCash, 2, ',', '.') }}</h4></td>
-                                </tr> --}}
+                                    <td style="text-align: right"><h4>{{ number_format($total_expense, 2, ',', '.') }}</h4></td>
+                                </tr>
                             <tr style="background-color: #E5E8E8">
                                 <td>
                                     <h4>Dinero en efectivo disponible</h4>
                                 </td>
                                 <td style="text-align: right">
-                                    <h4>{{ number_format($cashierInput + $total_movements_efectivo, 2, ',', '.') }}</h4>
+                                    <h4>{{ number_format($cashierInput + $total_movements_efectivo - $total_expense, 2, ',', '.') }}</h4>
                                 </td>
                             </tr>
-                            @if ($cashier->amount)
+                            {{-- @if ($cashier->amount)
                                 <tr style="background-color: #E5E8E8">
                                     <td>
                                         <h4>Dinero en efectivo al cerrar caja</h4>
@@ -313,7 +385,7 @@
                                             {{ number_format($cashier->balance, 2, ',', '.') }}</h4>
                                     </td>
                                 </tr>
-                            @endif
+                            @endif --}}
                         </table>
                     </div>
                 </div>

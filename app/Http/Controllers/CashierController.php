@@ -55,9 +55,6 @@ class CashierController extends Controller
                     ->where('deleted_at', null)
                     ->orderBy('id', 'DESC')
                     ->paginate($paginate);
-
-        // dump($cashier);
-        // return 1;
             
         return view('cashiers.list', compact('cashier'));
     }
@@ -326,6 +323,8 @@ class CashierController extends Controller
             return redirect()->route('cashiers.index')->with(['message' => 'Caja cerrada exitosamente.', 'alert-type' => 'success', 'id_cashier_close' => $id]);
         } catch (\Throwable $th) {
             DB::rollback();
+            $this->logError($th, $request);
+            
             return redirect()->route('cashiers.index')->with(['message' => 'Ocurrió un error.', 'alert-type' => 'error']);
         }
     }
