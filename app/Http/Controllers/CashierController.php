@@ -210,7 +210,8 @@ class CashierController extends Controller
         }
         if (count($cashier->movements->where('deleted_at', null)->where('status', 'Pendiente'))>0) {
             return redirect()->route('voyager.dashboard')->with(['message' => 'La caja no puede ser cerrada, tiene transacciones pendiente.', 'alert-type' => 'warning']);
-        }        
+        }   
+        // return $cashier;     
         return view('cashiers.close', compact('cashier'));
     }
 
