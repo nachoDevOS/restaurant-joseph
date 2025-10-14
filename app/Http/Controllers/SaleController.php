@@ -114,8 +114,6 @@ class SaleController extends Controller
             },
         ])->get();
 
-        // return $sale;
-
         return view('sales.edit', compact('sale', 'categories', 'cashier'));
     }
 
