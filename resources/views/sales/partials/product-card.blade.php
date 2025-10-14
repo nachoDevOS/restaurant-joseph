@@ -1,7 +1,8 @@
 @php
     $cantStock = $product->itemSalestocks->sum('stock');
     $isOutOfStock = ($product->typeSale == 'Venta Con Stock' && $cantStock == 0);
-    $image = $product->image ? asset('storage/'.str_replace(['.jpg', '.png'], '-cropped.webp', $product->image)) : asset('images/default.jpg');
+    // $image = $product->image ? asset('storage/'.str_replace(['.jpg', '.png'], '-cropped.webp', $product->image)) : asset('images/default.jpg');
+    $image = $product->image ? $image = asset('storage/' . str_replace('.avif', '', $item->image) . '-cropped.webp'); : asset('images/default.jpg');
 @endphp
 
 <div class="col-md-3 col-sm-4 col-xs-6" style="margin-bottom: 15px;">

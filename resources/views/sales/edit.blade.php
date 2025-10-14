@@ -653,8 +653,7 @@
                     const subtotal = product.price * product.quantity;
                     total += subtotal;
 
-                    let image = product.image ? product.image.replace('.jpg', '-cropped.webp').replace('.png',
-                        '-cropped.webp') : '{{ asset('images/default.jpg') }}';
+                    let image = product.image ? product.image.replace('.avif','-cropped.webp') : '{{ asset('images/default.jpg') }}';
 
                     $tableBody.append(`
                         <tr class="tr-item" id="tr-item-${productId}">
@@ -790,7 +789,7 @@
             if (!$productCard.length) return null;
             return {
                 id: productId,
-                name: $productCard.find('h5').first().text().trim(),
+                name: $productCard.find('.product-name').first().text().trim(),
                 price: parseFloat($productCard.find('.text-success').text().replace('Bs. ', '').replace(',', '.')),
                 image: $productCard.find('img').attr('src')
             };
