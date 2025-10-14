@@ -134,6 +134,7 @@ class SaleController extends Controller
                             ]);
                     },
                 ])
+                ->where('status', 1)
                 ->get();
 
         $cashier = $this->cashier('user', Auth::user()->id, 'status = "abierta"');
