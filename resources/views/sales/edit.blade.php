@@ -25,12 +25,6 @@
                 <div class="col-md-7 col-sm-12" id="products-container">
                     <div class="panel panel-bordered">
                         <div class="panel-body" style="padding: 0px">
-                            <div class="row">
-                                <div class="col-md-12" style="padding: 10px 25px;">
-                                    <input type="text" id="input-search-products" class="form-control"
-                                        placeholder="Buscar producto...">
-                                </div>
-                            </div>
                             <ul class="nav nav-tabs" role="tablist">
                                 <li role="presentation" class="active">
                                     <a href="#tab-all" aria-controls="tab-all" role="tab" data-toggle="tab">Todos</a>
@@ -494,17 +488,6 @@
             $('#form-sale').submit(function(e) {
                 $('.btn-confirm').html('Guardando... <i class="fa fa-spinner fa-spin"></i>');
                 $('.btn-confirm').attr('disabled', true);
-            });
-
-            // Buscador de productos
-            $('#input-search-products').on('keyup', function() {
-                let value = $(this).val().toLowerCase();
-                $('.product-card-wrapper').filter(function() {
-                    let productName = $(this).find('h5').text().toLowerCase();
-                    let parentDiv = $(this).parent();
-                    let matches = productName.indexOf(value) > -1;
-                    parentDiv.toggle(matches);
-                });
             });
 
             // Mover el contenido del carrito al modal en vista móvil
