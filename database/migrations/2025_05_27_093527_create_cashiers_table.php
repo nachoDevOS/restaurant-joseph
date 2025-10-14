@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('vault_id')->nullable()->constrained('vaults');
             $table->foreignId('user_id')->nullable()->constrained('users');  // Cajero 
+            $table->string('sale')->nullable()->after('user_id'); //Para saber o categorizar la caja si es almuerzo o cena
+            
             $table->string('title')->nullable();
             // $table->decimal('amount', 10, 2)->nullable();
             $table->text('observations')->nullable();

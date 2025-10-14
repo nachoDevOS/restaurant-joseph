@@ -13,7 +13,7 @@ class Cashier extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'vault_id', 'user_id', 'title', 'observations', 'status', 'closed_at', 'deleted_at', 'closeUser_id', 'view',
+        'vault_id', 'user_id', 'sale', 'title', 'observations', 'status', 'closed_at', 'deleted_at', 'closeUser_id', 'view',
         'registerUser_id',
         'registerRole',
         'deleted_at',

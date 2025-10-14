@@ -85,6 +85,7 @@ class CashierController extends Controller
             $cashier = Cashier::create([
                 'vault_id' => $request->vault_id,
                 'user_id' => $request->user_id,
+                'sale'=>$request->sale,
                 'title' => $request->title,
                 'observations' => $request->observations,
                 'status' => 'apertura pendiente',

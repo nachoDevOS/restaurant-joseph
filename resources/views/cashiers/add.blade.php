@@ -108,10 +108,19 @@
                                         {{-- <label class="control-label" for="user_id">Cajero</label> --}}
                                         <small>Cajero</small>
                                         <select name="user_id" class="form-control select2" required>
-                                            <option value="">Seleccione al usuario</option>
+                                            <option value="" selected disabled>Seleccione al usuario</option>
                                             @foreach ($cashiers as $cashier)
                                                 <option value="{{ $cashier->id }}">{{ $cashier->name }}</option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <small>Tipo de Venta</small>
+                                        <select name="sale" class="form-control select2" required>
+                                            <option value="" selected disabled>--Seleccione una opción--</option>
+                                            <option value="Desayuno">Desayuno</option>
+                                            <option value="Almuerzo">Almuerzo</option>
+                                            <option value="Cena">Cena</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
