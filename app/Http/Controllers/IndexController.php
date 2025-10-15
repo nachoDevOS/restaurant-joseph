@@ -177,16 +177,20 @@ class IndexController extends Controller
 
         $typeCashier = $typeCashier?"sale = '$typeCashier'":1;
 
-        $cashier = Cashier::where('deleted_at', null)
-            ->whereRaw($typeCashier )
-            // ->get();
-            ->first();
-        dump('$cashier');
+        // Primero obtienes los cashiers filtrados
+        $cashiers = Cashier::where('deleted_at', null)
+            ->whereRaw($typeCashier)
+            ->get();
+
+        // Extraes los IDs de los cashiers
+        $cashierIds = $cashiers->pluck('id');
+        // dump($cashierIds);
 
 
         $sales = Sale::with('person', 'saleTransactions', 'saleDetails.itemSale')
             ->whereDate('created_at', '>=', $startDate)
             ->whereDate('created_at', '<=', $endDate)
+            ->whereIn('cashier_id', $cashierIds) // Filtra por los IDs de los cashiers
             ->withTrashed()
             ->orderBy('created_at', 'DESC')
             ->get();
