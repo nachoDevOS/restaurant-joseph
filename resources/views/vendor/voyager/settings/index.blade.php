@@ -237,7 +237,7 @@
                 <div class="page-content settings container-fluid">
                     <ul class="nav nav-tabs">
                         @foreach($settings as $group => $setting)
-                            @if ($group != 'Site' && $group != 'System')
+                            @if ($group != 'Site' && $group != 'System' && $group != 'Company' && $group != 'Servidores')
                                 <li @if($group == $active) class="active" @endif>
                                     <a data-toggle="tab" href="#{{ \Illuminate\Support\Str::slug($group) }}">{{ $group }}</a>
                                 </li>
