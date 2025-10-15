@@ -108,8 +108,6 @@ class Controller extends BaseController
 
             $cashierOut = $cashier->expenses->where('deleted_at', null)->sum('amount');
 
-
-
             $amountCashier = ($cashierIn + $paymentEfectivo) - $cashierOut;
         }
 
