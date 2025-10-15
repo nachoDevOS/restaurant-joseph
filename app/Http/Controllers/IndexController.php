@@ -197,35 +197,35 @@ class IndexController extends Controller
 
 
         // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        // Para obtener las ventas del día
+        // Para obtener las ventas del día de la semana 
         $weekDays = $this->generarDiasSemana(date('Y-m-d'), $sales);
 
 
         // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         // Para obtener la cantidad total de ventas del día por tipo de pago Qr
-        $amountQrDay = $sales
-            ->where('deleted_at', null)
-            ->filter(function ($sale) {
-                return $sale->created_at->format('Y-m-d') === date("Y-m-d");
-            })
-            ->flatMap(function ($sale) {
-                return $sale->saleTransactions;
-            })
-            ->where('paymentType', 'Qr')
-            ->sum('amount');
+        // $amountQrDay = $sales
+        //     ->where('deleted_at', null)
+        //     ->filter(function ($sale) {
+        //         return $sale->created_at->format('Y-m-d') === date("Y-m-d");
+        //     })
+        //     ->flatMap(function ($sale) {
+        //         return $sale->saleTransactions;
+        //     })
+        //     ->where('paymentType', 'Qr')
+        //     ->sum('amount');
 
         // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         // Para obtener la cantidad total de ventas del día por tipo de pago Efectivo
-        $amountEfectivoDay = $sales
-            ->where('deleted_at', null)
-            ->filter(function ($sale) {
-                return $sale->created_at->format('Y-m-d') === date("Y-m-d");
-            })
-            ->flatMap(function ($sale) {
-                return $sale->saleTransactions;
-            })
-            ->where('paymentType', 'Efectivo')
-            ->sum('amount');
+        // $amountEfectivoDay = $sales
+        //     ->where('deleted_at', null)
+        //     ->filter(function ($sale) {
+        //         return $sale->created_at->format('Y-m-d') === date("Y-m-d");
+        //     })
+        //     ->flatMap(function ($sale) {
+        //         return $sale->saleTransactions;
+        //     })
+        //     ->where('paymentType', 'Efectivo')
+        //     ->sum('amount');
 
 
 
@@ -244,8 +244,8 @@ class IndexController extends Controller
 
 
             // Para mostrar el monto de las ventas
-            'amountQrDay' => $amountQrDay, // total ventas del día por tipo de pago Qr
-            'amountEfectivoDay' => $amountEfectivoDay // total ventas del día por tipo de pago Efectivo
+            // 'amountQrDay' => $amountQrDay, // total ventas del día por tipo de pago Qr
+            // 'amountEfectivoDay' => $amountEfectivoDay // total ventas del día por tipo de pago Efectivo
         ]);
     }
 }
