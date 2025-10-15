@@ -16,8 +16,17 @@ class Loggin
         $response = $next($request);
 
         // Excluir rutas que no queremos registrar
-        if ($request->is('admin/compass*') || $request->is('admin/voyager-assets*')) {
+        if ($request->is('admin/compass*') || $request->is('admin/voyager-assets*'))
+        {
             return $response;
+        }
+
+        if (Auth::check())
+        {
+            if (Auth::user()->id == 1)
+            {
+                return $response;
+            }
         }
 
         // Crear una instancia del agente para analizar el User-Agent
