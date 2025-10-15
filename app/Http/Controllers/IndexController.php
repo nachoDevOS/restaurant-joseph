@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cashier;
 use App\Models\Person;
 use App\Models\Sale;
 use Carbon\Carbon;
@@ -158,7 +159,7 @@ class IndexController extends Controller
         // return response()->json($top5Products);
         return $top5Products;;
     }
-    public function IndexSystem()
+    public function IndexSystem($typeCashier)
     {
         $month = date('m');
         $year = date('Y');
@@ -172,6 +173,16 @@ class IndexController extends Controller
 
         $startDate = $monthInteractive[0]['year'] . '-' . str_pad($monthInteractive[0]['month_number'], 2, '0', STR_PAD_LEFT) . '-01';
         $endDate = date('Y-m-t', strtotime($monthInteractive[11]['year'] . '-' . str_pad($monthInteractive[11]['month_number'], 2, '0', STR_PAD_LEFT) . '-01'));
+
+
+        $typeCashier = $typeCashier?"sale = '$typeCashier'":1;
+
+        $cashier = Cashier::where('deleted_at', null)
+            ->whereRaw($typeCashier )
+            // ->get();
+            ->first();
+        dump('$cashier');
+
 
         $sales = Sale::with('person', 'saleTransactions', 'saleDetails.itemSale')
             ->whereDate('created_at', '>=', $startDate)

@@ -45,7 +45,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('globalFuntion_cashierMoney', $globalFuntion_cashierMoney->original);
 
 
-            $global_index = $new->IndexSystem();
+            $global_index = $new->IndexSystem(null);
             // $global_cashier = $global_cashier->availableMoney(Auth::user()->id, 'user');
             $view->with('global_index', $global_index->original); //Para retornar en formato json
             // $view->with('global_index', $global_index); //Para retornar en formato de array
