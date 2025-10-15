@@ -50,11 +50,6 @@ class AppServiceProvider extends ServiceProvider
             return $new->IndexSystem(null)->original;
         });
 
-        $this->app->singleton('global_index', function () {
-                $new = new IndexController();
-                return $new->IndexSystem(null)->original;
-            });
-
         // 2. Usamos el View Composer para COMPARTIR los datos ya resueltos (o por resolver una vez) con todas las vistas.
         View::composer('*', function ($view) {
             $view->with('globalFuntion_cashier', $this->app->make('globalFuntion_cashier'));
