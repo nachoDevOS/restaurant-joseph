@@ -31,7 +31,7 @@
                             </div>
                             <div class="col-md-4 text-right">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-primary" >
+                                    <button type="button" class="btn btn-primary" id="range-btn">
                                         <i class="voyager-refresh"></i> Todo
                                     </button>
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -729,6 +729,17 @@
                 type: 'line',
                 data: comparacionAnualData,
                 options: chartOptions
+            });
+
+            // Cambiar el texto del botón del dropdown
+            $('.dropdown-menu a').click(function(e) {
+                e.preventDefault(); // Evita que el enlace recargue la página
+                var range = $(this).data('range');
+                
+                // Actualiza el texto del botón
+                $('#range-btn').html('<i class="voyager-refresh"></i> ' + range);
+
+                // Aquí puedes agregar la lógica para filtrar los datos según el rango seleccionado
             });
         });
     </script>
