@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-bordered">
-                    <div class="panel-body">
+                    <div class="panel-body" style="overflow: visible;">
                         <div class="row">
                             <div class="col-md-8">
                                 <h2>Hola, {{ Auth::user()->name }}</h2>
@@ -38,6 +38,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#" data-range="Todo">Todo</a></li>
                                         <li><a href="#" data-range="Desayano">Desayano</a></li>
                                         <li><a href="#" data-range="Almuerzo">Almuerzo</a></li>
                                         <li><a href="#" data-range="Cena">Cena</a></li>
