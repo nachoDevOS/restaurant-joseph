@@ -38,9 +38,9 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#" data-range="today">Desayano</a></li>
-                                        <li><a href="#" data-range="week">Almuerzo</a></li>
-                                        <li><a href="#" data-range="month">Cena</a></li>
+                                        <li><a href="#" data-range="Desayano">Desayano</a></li>
+                                        <li><a href="#" data-range="Almuerzo">Almuerzo</a></li>
+                                        <li><a href="#" data-range="Cena">Cena</a></li>
                                     </ul>
                                 </div>
                             </div>
