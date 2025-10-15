@@ -175,7 +175,12 @@ class IndexController extends Controller
         $endDate = date('Y-m-t', strtotime($monthInteractive[11]['year'] . '-' . str_pad($monthInteractive[11]['month_number'], 2, '0', STR_PAD_LEFT) . '-01'));
 
 
-        $typeCashier = $typeCashier?"sale = '$typeCashier'":1;
+        // Si el tipo es "Todo", no aplicamos filtro. De lo contrario, filtramos por el tipo de venta.
+        if ($typeCashier && $typeCashier !== 'Todo') {
+            $typeCashier = "sale = '$typeCashier'";
+        } else {
+            $typeCashier = 1; // Condición que siempre es verdadera para no filtrar
+        }
 
         // Primero obtienes los cashiers filtrados
         $cashiers = Cashier::where('deleted_at', null)

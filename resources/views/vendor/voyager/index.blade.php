@@ -31,13 +31,13 @@
                             </div>
                             <div class="col-md-4 text-right">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-primary" >
+                                    <button type="button" class="btn btn-primary" id="filter-button">
                                         <i class="voyager-refresh"></i> Todo
                                     </button>
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                         <span class="caret"></span>
                                     </button>
-                                    <ul class="dropdown-menu" role="menu">
+                                    <ul class="dropdown-menu" role="menu" id="filter-menu">
                                         <li><a href="#" data-range="Todo">Todo</a></li>
                                         <li><a href="#" data-range="Desayano">Desayano</a></li>
                                         <li><a href="#" data-range="Almuerzo">Almuerzo</a></li>
@@ -299,7 +299,7 @@
                                             <br>
                                             <div class="text-right">
                                                 <button type="button" data-toggle="modal"
-                                                    data-target="#refuse_cashier-modal" class="btn btn-danger">Rechazar
+                                                    data-target="#refuse_cashier-modal" class="btn btn-danger">Rechazar 
                                                     apertura <i class="voyager-x"></i></button>
                                                 <button type="button" data-toggle="modal" data-target="#open_cashier-modal"
                                                     class="btn btn-success">Aceptar apertura <i
@@ -582,7 +582,11 @@
 
     <script>
         $(document).ready(function() {
-            console.log(@json($monthInteractive));
+            // 1. Declarar las variables de los gráficos aquí para que sean accesibles en todo el script
+            let ventasMensualesChart, topProductosChart, ventasDiasChart;
+
+
+            // --- Preparación de datos iniciales para los gráficos ---
             const monthData = @json($monthInteractive);
             const ventasMensualesData = {
                 labels: monthData.map(item => item.month.substring(0, 3) + '-' + item.year),
@@ -703,30 +707,93 @@
                 }
             };
 
-            // Crear los gráficos
-            new Chart(document.getElementById('ventasMensualesChart'), {
+            // Lógica para el filtro del dashboard
+            $('#filter-menu a').on('click', function(e) {
+                e.preventDefault();
+                var range = $(this).data('range');
+                $('#filter-button').html('<i class="voyager-refresh"></i> ' + range);
+                
+                // Muestra un loader mientras se cargan los datos
+                $('#voyager-loader').fadeIn();
+
+                // Petición AJAX para obtener los nuevos datos
+                $.ajax({
+                    url: '{{ url('admin/dashboard-data') }}/' + range,
+                    type: 'GET',
+                    success: function(data) {
+                        updateDashboard(data);
+                        $('#voyager-loader').fadeOut();
+                    },
+                    error: function(error) {
+                        console.error("Error al cargar los datos:", error);
+                        toastr.error('No se pudieron actualizar los datos del dashboard.');
+                        $('#voyager-loader').fadeOut();
+                    }
+                });
+            });
+
+            // Función para actualizar todos los componentes del dashboard
+            function updateDashboard(data) {
+                // --- Actualizar KPIs ---
+                const today = new Date().toISOString().slice(0, 10);
+                
+                let amountDaytotal = 0;
+                let saleDaytotal = 0;
+
+                data.sales.forEach(sale => {
+                    if (sale.deleted_at === null && sale.created_at.startsWith(today)) {
+                        amountDaytotal += parseFloat(sale.amount);
+                        saleDaytotal++;
+                    }
+                });
+
+                let ticketPromedio = saleDaytotal > 0 ? (amountDaytotal / saleDaytotal) : 0;
+
+                // Formatear números a 2 decimales con coma
+                const formatNumber = (num) => num.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                $('.dashboard-kpi').eq(0).find('.kpi-value').text('Bs. ' + formatNumber(amountDaytotal));
+                $('.dashboard-kpi').eq(1).find('.kpi-value').text(saleDaytotal);
+                $('.dashboard-kpi').eq(2).find('.kpi-value').text('Bs. ' + formatNumber(ticketPromedio));
+                $('.dashboard-kpi').eq(3).find('.kpi-value').text(data.people.length);
+
+                // --- Actualizar Gráficos ---
+
+                // Gráfico de Ventas Mensuales
+                ventasMensualesChart.data.datasets[0].data = data.monthInteractive.map(item => item.amount);
+                ventasMensualesChart.update();
+
+                // Gráfico de Top 5 Productos
+                topProductosChart.data.labels = data.productTop5Day.map(item => item.name);
+                topProductosChart.data.datasets[0].data = data.productTop5Day.map(item => item.total_quantity);
+                topProductosChart.update();
+
+                // Gráfico de Ventas por Día de la Semana
+                ventasDiasChart.data.datasets[0].data = data.weekDays.map(item => item.amount);
+                ventasDiasChart.update();
+
+                toastr.success('Dashboard actualizado para: ' + $('#filter-button').text().trim());
+            }
+
+            // 2. Inicializar los gráficos UNA SOLA VEZ, asignándolos a las variables declaradas arriba
+            ventasMensualesChart = new Chart(document.getElementById('ventasMensualesChart'), {
                 type: 'bar',
                 data: ventasMensualesData,
                 options: chartOptions
             });
 
-            new Chart(document.getElementById('topProductosChart'), {
+            topProductosChart = new Chart(document.getElementById('topProductosChart'), {
                 type: 'pie',
                 data: topProductosData,
                 options: pieChartOptions
             });
 
-            new Chart(document.getElementById('ventasDiasChart'), {
+            ventasDiasChart = new Chart(document.getElementById('ventasDiasChart'), {
                 type: 'line',
                 data: ventasDiasData,
                 options: chartOptions
             });
 
-            new Chart(document.getElementById('comparacionAnualChart'), {
-                type: 'line',
-                data: comparacionAnualData,
-                options: chartOptions
-            });
         });
     </script>
 @stop

@@ -185,6 +185,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['loggin', 'system']], functi
     Route::get('ajax/personList', [AjaxController::class, 'personList']);
     Route::post('ajax/person/store', [AjaxController::class, 'personStore']);
 
+    // Ruta para obtener los datos del dashboard dinámicamente
+    Route::get('/dashboard-data/{type}', [\App\Http\Controllers\IndexController::class, 'IndexSystem'])->name('dashboard.data');
+
 });
 
 
