@@ -39,7 +39,7 @@
                                     </button>
                                     <ul class="dropdown-menu" role="menu" id="filter-menu">
                                         <li><a href="#" data-range="Todo">Todo</a></li>
-                                        <li><a href="#" data-range="Desayano">Desayano</a></li>
+                                        <li><a href="#" data-range="Desayuno">Desayuno</a></li>
                                         <li><a href="#" data-range="Almuerzo">Almuerzo</a></li>
                                         <li><a href="#" data-range="Cena">Cena</a></li>
                                     </ul>
@@ -118,7 +118,7 @@
                             <i class="voyager-bar-chart"></i>
                         </div>
                         <h3 class="kpi-value">Bs.
-                            {{ $amountDaytotal ? number_format($amountDaytotal / $saleDaytotal, 2, ',', '.') : 0 }}</h3>
+                            {{ $saleDaytotal > 0 ? number_format($amountDaytotal / $saleDaytotal, 2, ',', '.') : '0,00' }}</h3>
                         <p class="kpi-label">Ticket Promedio</p>
                         {{-- <div class="kpi-trend trend-up">
                             <i class="voyager-up"></i> 8.7%
