@@ -37,12 +37,13 @@ class AppServiceProvider extends ServiceProvider
         // Esto asegura que la lógica pesada (consultas a BD, etc.) solo se ejecute la primera vez que se necesiten los datos.
         $this->app->singleton('globalFuntion_cashier', function () {
             $controller = new Controller();
-            return $controller->cashier('user', Auth::user() ? Auth::user()->id : null, 'status <> "cerrada"');
+            // return $controller->cashier(null, Auth::check() ? Auth::user()->id : null, 'status <> "cerrada"');
+            return $controller->cashier(null, Auth::check() ? 'user_id = "'.Auth::user()->id.'"' : null, 'status <> "cerrada"');
         });
  
         $this->app->singleton('globalFuntion_cashierMoney', function () {
             $controller = new Controller();
-            return $controller->cashierMoney('user', Auth::user() ? Auth::user()->id : null, 'status = "abierta"')->original;
+            return $controller->cashierMoney(null, Auth::check() ? 'user_id = "'.Auth::user()->id.'"' : null, 'status = "abierta"')->original;
         });
  
         $this->app->singleton('global_index', function () {

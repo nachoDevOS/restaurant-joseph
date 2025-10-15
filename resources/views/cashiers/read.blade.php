@@ -42,16 +42,7 @@
             <div class="col-md-12">
                 <div class="panel panel-bordered" style="padding-bottom:5px;">
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="panel-heading" style="border-bottom:0;">
-                                <h3 class="panel-title">Descripción</h3>
-                            </div>
-                            <div class="panel-body" style="padding-top:0;">
-                                <p>{{ $cashier->title }}</p>
-                            </div>
-                            <hr style="margin:0;">
-                        </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="panel-heading" style="border-bottom:0;">
                                 <h3 class="panel-title">Cajero</h3>
                             </div>
@@ -60,6 +51,25 @@
                             </div>
                             <hr style="margin:0;">
                         </div>
+                        <div class="col-md-4">
+                            <div class="panel-heading" style="border-bottom:0;">
+                                <h3 class="panel-title">Tipo de Caja</h3>
+                            </div>
+                            <div class="panel-body" style="padding-top:0;">
+                                <p>{{ $cashier->sale }}</p>
+                            </div>
+                            <hr style="margin:0;">
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel-heading" style="border-bottom:0;">
+                                <h3 class="panel-title">Descripción</h3>
+                            </div>
+                            <div class="panel-body" style="padding-top:0;">
+                                <p>{{ $cashier->title }}</p>
+                            </div>
+                            <hr style="margin:0;">
+                        </div>
+                        
                         <div class="col-md-12">
                             <div class="panel-heading" style="border-bottom:0;">
                                 <h3 class="panel-title">Observaciones</h3>

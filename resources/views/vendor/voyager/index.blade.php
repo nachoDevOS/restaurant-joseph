@@ -187,14 +187,18 @@
                                             <hr>
                                             <table width="100%" cellpadding="20">
                                                 <tr>
+                                                    <td><small>Ventas Total de Caja</small></td>
+                                                    <td class="text-right"><h4>{{ number_format($globalFuntion_cashierMoney['paymentEfectivo']+$globalFuntion_cashierMoney['paymentQr'], 2, ',', '.') }} <small>Bs.</small></h4></td>
+                                                </tr>
+                                                <tr>
                                                     <td><small>Ventas "Efectivo"</small></td>
                                                     <td class="text-right"><h4>{{ number_format($globalFuntion_cashierMoney['paymentEfectivo'], 2, ',', '.') }} <small>Bs.</small></h4></td>
                                                 </tr>
-                                                    <tr>
+                                                <tr>
                                                     <td><small>Ventas "Qr"</small></td>
                                                     <td class="text-right"><h4>{{ number_format($globalFuntion_cashierMoney['paymentQr'], 2, ',', '.') }} <small>Bs.</small></h4></td>
                                                 </tr>
-                                                    <tr>
+                                                <tr>
                                                     <td><small>Gastos Realizados</small></td>
                                                     <td class="text-right"><h4>{{ number_format($globalFuntion_cashierMoney['cashierOut'], 2, ',', '.') }} <small>Bs.</small></h4></td>
                                                 </tr>
@@ -537,8 +541,6 @@
                 $(document).ready(function() {
                     const data = {
                         labels: [
-                            'Dinero asignado a Caja',
-                            'Dinero Disponible en Caja',
                             'Ventas en Efectivo',
                             'Ventas en Qr',
                             'Gastos',
@@ -546,18 +548,14 @@
                         datasets: [{
                             label: 'Bs.',
                             data: [
-                                "{{ $globalFuntion_cashierMoney['cashierIn'] }}", // Dinero en Caja
-                                "{{ $globalFuntion_cashierMoney['amountCashier'] }}", // Dinero Disponible
                                 "{{ $globalFuntion_cashierMoney['paymentEfectivo'] }}", // Ventas Efectivo
                                 "{{ $globalFuntion_cashierMoney['paymentQr'] }}", // Ventas QR
                                 "{{ $globalFuntion_cashierMoney['cashierOut'] }}", // Gastos
                             ],
                             backgroundColor: [
-                                'rgb(12, 55, 101)',
-                                'rgb(54, 162, 235)',
-                                'rgb(255, 206, 86)',
-                                'rgb(75, 192, 192)',
-                                'rgb(255, 99, 132)'
+                                'rgb(60, 179, 113)',
+                                'rgb(70, 130, 180)',
+                                'rgb(229, 57, 53)'
                             ],
                             hoverOffset: 4
                         }]

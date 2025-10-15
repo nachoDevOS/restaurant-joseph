@@ -95,7 +95,7 @@ class SaleController extends Controller
             'saleTransactions'
         ])->findOrFail($id);
 
-        $cashier = $this->cashier('user', Auth::user()->id, 'status = "abierta"');
+        $cashier = $this->cashier(null,'user_id = "'.Auth::user()->id.'"', 'status = "abierta"');
         if (!$cashier || $cashier->id !== $sale->cashier_id) {
             return redirect()
                 ->route('sales.index')
@@ -135,7 +135,8 @@ class SaleController extends Controller
                 ->where('status', 1)
                 ->get();
 
-        $cashier = $this->cashier('user', Auth::user()->id, 'status = "abierta"');
+        $cashier = $this->cashier(null,'user_id = "'.Auth::user()->id.'"', 'status = "abierta"');
+
 
         return view('sales.add', compact('categories', 'cashier'));
     }
@@ -162,7 +163,8 @@ class SaleController extends Controller
                 ->with(['message' => 'Ocurrió un error.', 'alert-type' => 'error']);
         }
 
-        $cashier = $this->cashier('user', Auth::user()->id, 'status = "abierta"');
+        $cashier = $this->cashier(null,'user_id = "'.Auth::user()->id.'"', 'status = "abierta"');
+
 
         if (!$cashier) {
             return redirect()
@@ -300,7 +302,8 @@ class SaleController extends Controller
         }
 
         $sale = Sale::findOrFail($id);
-        $cashier = $this->cashier('user', Auth::user()->id, 'status = "abierta"');
+        $cashier = $this->cashier(null,'user_id = "'.Auth::user()->id.'"', 'status = "abierta"');
+
 
         if (!$cashier || $cashier->id !== $sale->cashier_id) {
             return redirect()

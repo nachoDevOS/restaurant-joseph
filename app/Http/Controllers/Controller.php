@@ -53,12 +53,13 @@ class Controller extends BaseController
     // }
 
     //Para obtener el detalle de cualquier caja y en cualquier estado que no se encuentre eliminada (Tipo de ID, cashier_id o user_id , status)
-    public function cashier($type, $id, $status)
+    public function cashier($id, $user, $status)
     {
-        $query = 'id = '.$id;
-        if($type == 'user'){
-            $query = 'user_id = '.$id;
-        }
+        // $query = 'id = "'.$id.'"';
+        // if($type == 'user'){
+        //     $query = 'user_id = "'.$id.'"';
+        // }
+        // return $user;
 
         $cashier = Cashier::with(['movements' => function($q){
                             $q->where('deleted_at', NULL);
@@ -74,7 +75,8 @@ class Controller extends BaseController
                         },'expenses.categoryExpense'
 
                     ])
-                    ->whereRaw($id?$query:1)
+                    ->whereRaw($id?$id:1) // id de cashier
+                    ->whereRaw($user?$user:1) //user_id del usario de cashier
                     ->where('deleted_at', null)
                     ->whereRaw($status?$status:1)
                     ->first();    
@@ -82,9 +84,9 @@ class Controller extends BaseController
         return $cashier;
     }
 
-    public function cashierMoney($type, $id, $status)
+    public function cashierMoney($id, $user, $status)
     {
-        $cashier = $this->cashier($type, $id, $status);
+        $cashier = $this->cashier($id, $user, $status);
 
 
         if($cashier){

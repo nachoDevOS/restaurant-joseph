@@ -72,8 +72,9 @@ class CashierController extends Controller
     public function store(Request $request)
     {
         $this->custom_authorize('add_cashiers');
-        $cashier = $this->cashier('user', $request->user_id, 'status = "abierta" or status = "apertura pendiente"');
+        $cashier = $this->cashier(null,'user_id = "'.$request->user_id.'"', '(status = "abierta" or status = "apertura pendiente" or status = "cierre pendiente")');
 
+        // return $cashier;
         if ($cashier) {
             return redirect()
                 ->route('cashiers.index')
@@ -143,7 +144,7 @@ class CashierController extends Controller
 
     public function show($id)
     {
-        $cashier = $this->cashier('cashier', $id, null);        
+        $cashier = $this->cashier('id = "'.$id.'"', null, null);        
         return view('cashiers.read' , compact('cashier'));
     }
 
@@ -204,7 +205,8 @@ class CashierController extends Controller
     //***para cerrar la caja el cajero vista 
     public function close($id)
     {
-        $cashier = $this->cashier('cashier', $id, 'status = "abierta"');
+        $cashier = $this->cashier('id = "'.$id.'"', null, 'status = "abierta"');        
+
 
         if (!$cashier) {
             return redirect()->route('voyager.dashboard')->with(['message' => 'La caja no se encuentra abierta.', 'alert-type' => 'warning']);
@@ -286,7 +288,9 @@ class CashierController extends Controller
 
     public function confirm_close($id)
     {
-        $cashier = $this->cashier('cashier', $id, '');
+        $cashier = $this->cashier('id = "'.$id.'"', null, null);        
+
+        
 
         if($cashier->status == 'cierre pendiente'){
             return view('cashiers.confirm_close', compact('cashier'));

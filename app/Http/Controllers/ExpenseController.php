@@ -20,7 +20,7 @@ class ExpenseController extends Controller
     public function store(Request $request)
     {
         // $this->custom_authorize('add_sales');
-        $cashier = $this->cashierMoney('user', Auth::user()->id, 'status = "abierta"')->original;
+        $cashier = $this->cashierMoney(null, 'user_id = "'.Auth::user()->id.'"', 'status = "abierta"')->original;
 
         if (!$cashier['return']) {
             return redirect()
