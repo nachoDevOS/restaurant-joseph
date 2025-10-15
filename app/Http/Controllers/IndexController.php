@@ -184,8 +184,6 @@ class IndexController extends Controller
 
         // Extraes los IDs de los cashiers
         $cashierIds = $cashiers->pluck('id');
-        // dump($cashierIds);
-
 
         $sales = Sale::with('person', 'saleTransactions', 'saleDetails.itemSale')
             ->whereDate('created_at', '>=', $startDate)

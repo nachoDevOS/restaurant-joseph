@@ -33,29 +33,33 @@ class AppServiceProvider extends ServiceProvider
         //
         Paginator::useBootstrap();
 
-
-        View::composer('*', function ($view) {
-            $new = new IndexController();
+        // 1. Registramos los singletons UNA SOLA VEZ por petición.
+        // Esto asegura que la lógica pesada (consultas a BD, etc.) solo se ejecute la primera vez que se necesiten los datos.
+        $this->app->singleton('globalFuntion_cashier', function () {
             $controller = new Controller();
-
-            $globalFuntion_cashier = $controller->cashier('user', Auth::user()?Auth::user()->id:null, 'status <> "cerrada"');
-            $view->with('globalFuntion_cashier', $globalFuntion_cashier);
-
-            $globalFuntion_cashierMoney = $controller->cashierMoney('user', Auth::user()?Auth::user()->id:null, 'status = "abierta"');
-            $view->with('globalFuntion_cashierMoney', $globalFuntion_cashierMoney->original);
-
-
-            $global_index = $new->IndexSystem(null);
-            // $global_cashier = $global_cashier->availableMoney(Auth::user()->id, 'user');
-            $view->with('global_index', $global_index->original); //Para retornar en formato json
-            // $view->with('global_index', $global_index); //Para retornar en formato de array
-
-            
-
+            return $controller->cashier('user', Auth::user() ? Auth::user()->id : null, 'status <> "cerrada"');
+        });
+ 
+        $this->app->singleton('globalFuntion_cashierMoney', function () {
+            $controller = new Controller();
+            return $controller->cashierMoney('user', Auth::user() ? Auth::user()->id : null, 'status = "abierta"')->original;
+        });
+ 
+        $this->app->singleton('global_index', function () {
+            $new = new IndexController();
+            return $new->IndexSystem(null)->original;
         });
 
+        $this->app->singleton('global_index', function () {
+                $new = new IndexController();
+                return $new->IndexSystem(null)->original;
+            });
 
-
-
+        // 2. Usamos el View Composer para COMPARTIR los datos ya resueltos (o por resolver una vez) con todas las vistas.
+        View::composer('*', function ($view) {
+            $view->with('globalFuntion_cashier', $this->app->make('globalFuntion_cashier'));
+            $view->with('globalFuntion_cashierMoney', $this->app->make('globalFuntion_cashierMoney'));
+            $view->with('global_index', $this->app->make('global_index'));
+        });
     }
 }
