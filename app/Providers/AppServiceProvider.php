@@ -38,7 +38,6 @@ class AppServiceProvider extends ServiceProvider
         // Esto asegura que la lógica pesada (consultas a BD, etc.) solo se ejecute la primera vez que se necesiten los datos.
         $this->app->singleton('globalFuntion_cashier', function () {
             $controller = new Controller();
-            // return $controller->cashier(null, Auth::check() ? Auth::user()->id : null, 'status <> "cerrada"');
             return $controller->cashier(null, Auth::check() ? 'user_id = "'.Auth::user()->id.'"' : null, 'status <> "cerrada"');
         });
  
@@ -49,9 +48,12 @@ class AppServiceProvider extends ServiceProvider
 
         // 2. Usamos el View Composer para COMPARTIR los datos ya resueltos (o por resolver una vez) con todas las vistas.
         View::composer('*', function ($view) {
-            $currentRouteName = Route::currentRouteName();
             $view->with('globalFuntion_cashier', $this->app->make('globalFuntion_cashier'));
             $view->with('globalFuntion_cashierMoney', $this->app->make('globalFuntion_cashierMoney'));
+
+
+            // Para omitir vista mediante rutas
+            $currentRouteName = Route::currentRouteName();
             if ($currentRouteName !== 'cashiers.close') {
                 // $view->with('globalFuntion_cashierMoney', $this->app->make('globalFuntion_cashierMoney'));
             }

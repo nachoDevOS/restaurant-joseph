@@ -74,7 +74,7 @@ class Controller extends BaseController
                     ->where('deleted_at', null)
                     ->whereRaw($status?$status:1)
                     ->first();   
-        // dump($cashier->id); 
+        dump($cashier->id); 
         
         return $cashier;
     }

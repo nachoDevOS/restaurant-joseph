@@ -219,7 +219,7 @@ class IndexController extends Controller
         $weekDays = $this->generarDiasSemana(date('Y-m-d'), $sales);
 
         $people = Person::where('deleted_at', null)->get();
-
+    
         return response()->json([
             'day' => $day,
             'month' => $month,
