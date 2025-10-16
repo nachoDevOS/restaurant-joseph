@@ -13,7 +13,7 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="full_name">Tipo de Gastos</label>
-                            <select name="categoryExpense_id " class="form-control select2" required>
+                            <select name="categoryExpense_id" class="form-control select2" required>
                                 <option value="" disabled selected>--Seleccione una Opción--</option>
                                 @foreach ( App\Models\CategoryExpense::where('deleted_at', null)->where('status', 1)->get() as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>

@@ -20,6 +20,7 @@ class ExpenseController extends Controller
     public function store(Request $request)
     {
         // $this->custom_authorize('add_sales');
+        // return $request;
         $cashier = $this->cashierMoney(null, 'user_id = "'.Auth::user()->id.'"', 'status = "abierta"')->original;
 
         if (!$cashier['return']) {
@@ -38,7 +39,7 @@ class ExpenseController extends Controller
         DB::beginTransaction();
         try {
             $sale = Expense::create([
-                'categoryExpense_id' => $request->categoryExpense_id ,
+                'categoryExpense_id' => $request->categoryExpense_id,
                 'observation' => $request->observation,
                 'amount' => $request->amount,
                 'cashier_id' => $cashier['cashier']->id,
