@@ -282,8 +282,10 @@ class SaleController extends Controller
             $fin = microtime(true);
             $tiempo = $fin - $inicio;
 
-            
-            Log::channel('time')->info('Execution Time: '.$fin - $inicio);
+            Log::channel('time')->info('SaleController@store Execution Time: ' . $tiempo . 's', [
+                'user_id' => Auth::id(),
+                'request' => $request->except(['_token']) // Excluimos el token para no llenar el log
+            ]);
 
             return redirect()
                 ->route('sales.index')
