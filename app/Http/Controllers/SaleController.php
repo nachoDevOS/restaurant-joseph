@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use App\Traits\Loggable;
+use Illuminate\Support\Facades\Log;
 
 
 class SaleController extends Controller
@@ -153,6 +154,8 @@ class SaleController extends Controller
 
     public function store(Request $request)
     {
+        $inicio = microtime(true);
+
         $amountReceivedEfectivo = $request->amountReceivedEfectivo ? $request->amountReceivedEfectivo : 0;
         $amountReceivedQr = $request->amountReceivedQr ? $request->amountReceivedQr : 0;
 
@@ -275,6 +278,13 @@ class SaleController extends Controller
                 ->first();
 
             DB::commit();
+
+            $fin = microtime(true);
+            $tiempo = $fin - $inicio;
+
+            
+            Log::channel('time')->info('Execution Time: '.$fin - $inicio);
+
             return redirect()
                 ->route('sales.index')
                 ->with(['message' => 'Registrado exitosamente.', 'alert-type' => 'success', 'sale' => $sale]);

@@ -118,14 +118,15 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        // Personalizados
         'requests' => [
             'driver' => 'single',
             'path' => storage_path('logs/requests.log'),
             'level' => 'info',
         ],
-        'error' => [
+        'time' => [
             'driver' => 'single',
-            'path' => storage_path('logs/error.log'),
+            'path' => storage_path('logs/time.log'),
             'level' => 'info',
         ],
     ],
