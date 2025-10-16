@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 
 use Illuminate\Pagination\Paginator;   
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController; 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\URL;
@@ -48,8 +49,12 @@ class AppServiceProvider extends ServiceProvider
 
         // 2. Usamos el View Composer para COMPARTIR los datos ya resueltos (o por resolver una vez) con todas las vistas.
         View::composer('*', function ($view) {
+            $currentRouteName = Route::currentRouteName();
             $view->with('globalFuntion_cashier', $this->app->make('globalFuntion_cashier'));
             $view->with('globalFuntion_cashierMoney', $this->app->make('globalFuntion_cashierMoney'));
+            if ($currentRouteName !== 'cashiers.close') {
+                // $view->with('globalFuntion_cashierMoney', $this->app->make('globalFuntion_cashierMoney'));
+            }
         });
 
         // Solo Para la vista Index
