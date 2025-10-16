@@ -218,6 +218,8 @@ class IndexController extends Controller
         // Para obtener las ventas del día de la semana 
         $weekDays = $this->generarDiasSemana(date('Y-m-d'), $sales);
 
+        dump($weekDays);
+
 
         // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         // Para obtener la cantidad total de ventas del día por tipo de pago Qr

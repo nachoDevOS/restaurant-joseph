@@ -45,17 +45,16 @@ class AppServiceProvider extends ServiceProvider
             $controller = new Controller();
             return $controller->cashierMoney(null, Auth::check() ? 'user_id = "'.Auth::user()->id.'"' : null, 'status = "abierta"')->original;
         });
- 
-        $this->app->singleton('global_index', function () {
-            $new = new IndexController();
-            return $new->IndexSystem(null)->original;
-        });
 
         // 2. Usamos el View Composer para COMPARTIR los datos ya resueltos (o por resolver una vez) con todas las vistas.
         View::composer('*', function ($view) {
             $view->with('globalFuntion_cashier', $this->app->make('globalFuntion_cashier'));
             $view->with('globalFuntion_cashierMoney', $this->app->make('globalFuntion_cashierMoney'));
-            $view->with('global_index', $this->app->make('global_index'));
+        });
+
+        View::composer('voyager::index', function ($view) {
+            $new = new IndexController();
+            $view->with('global_index', $new->IndexSystem(null)->original);
         });
     }
 }
