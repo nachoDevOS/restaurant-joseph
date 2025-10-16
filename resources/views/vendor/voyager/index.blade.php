@@ -739,7 +739,7 @@
                 let saleDaytotal = 0;
 
                 data.sales.forEach(sale => {
-                    if (sale.deleted_at === null && sale.created_at.startsWith(today)) {
+                    if (sale.deleted_at === null && sale.created_at >= today) {
                         amountDaytotal += parseFloat(sale.amount);
                         saleDaytotal++;
                     }
