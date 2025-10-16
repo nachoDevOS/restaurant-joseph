@@ -30,7 +30,7 @@
         <form id="form-sale" action="{{ route('sales.store') }}" method="post">
             @csrf
             <div class="row">
-                @if (!$cashier)
+                @if (!$globalFuntion_cashierMoney['cashier'])
                     <div class="col-md-12 col-sm-12">
                         <div class="panel panel-bordered alert alert-warning">
                             <strong><i class="voyager-info-circled"></i> Advertencia:</strong>

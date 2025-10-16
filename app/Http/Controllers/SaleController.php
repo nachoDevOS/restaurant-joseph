@@ -136,10 +136,7 @@ class SaleController extends Controller
                 ->where('status', 1)
                 ->get();
 
-        $cashier = $this->cashier(null,'user_id = "'.Auth::user()->id.'"', 'status = "abierta"');
-
-
-        return view('sales.add', compact('categories', 'cashier'));
+        return view('sales.add', compact('categories'));
     }
 
     public function ticket($typeSale)
