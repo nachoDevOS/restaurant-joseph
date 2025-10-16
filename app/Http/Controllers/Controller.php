@@ -55,12 +55,6 @@ class Controller extends BaseController
     //Para obtener el detalle de cualquier caja y en cualquier estado que no se encuentre eliminada (Tipo de ID, cashier_id o user_id , status)
     public function cashier($id, $user, $status)
     {
-        // $query = 'id = "'.$id.'"';
-        // if($type == 'user'){
-        //     $query = 'user_id = "'.$id.'"';
-        // }
-        // return $user;
-
         $cashier = Cashier::with(['movements' => function($q){
                             $q->where('deleted_at', NULL);
                         },'vault_details.cash' => function($q){
@@ -79,7 +73,8 @@ class Controller extends BaseController
                     ->whereRaw($user?$user:1) //user_id del usario de cashier
                     ->where('deleted_at', null)
                     ->whereRaw($status?$status:1)
-                    ->first();    
+                    ->first();   
+        // dump($cashier->id); 
         
         return $cashier;
     }
@@ -91,10 +86,6 @@ class Controller extends BaseController
 
         if($cashier){
             $cashierIn = $cashier->movements->where('type', 'ingreso')->where('deleted_at', NULL)->where('status', 'Aceptado')->sum('amount');
-
-            //::::::::::::Ingresos::::::::::
-            // $paymentEfectivo = $cashier->sales->where('deleted_at', NULL)->where('saleTransactions.typeSale', 'Efectivo')->sum('amount');
-
 
             $paymentEfectivo = $cashier->sales->where('deleted_at', null)
                 ->flatMap(function($sale) {

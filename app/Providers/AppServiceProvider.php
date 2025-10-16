@@ -52,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('globalFuntion_cashierMoney', $this->app->make('globalFuntion_cashierMoney'));
         });
 
+        // Solo Para la vista Index
         View::composer('voyager::index', function ($view) {
             $new = new IndexController();
             $view->with('global_index', $new->IndexSystem(null)->original);
