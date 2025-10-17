@@ -711,27 +711,20 @@
             // Función para actualizar todos los componentes del dashboard
             function updateDashboard(data) {
                 // --- Actualizar KPIs ---
-                const today = new Date().toISOString().slice(0, 10);
-                
-                let amountDaytotal = 0;
-                let saleDaytotal = 0;
-
-                data.sales.forEach(sale => {
-                    if (sale.deleted_at === null && sale.created_at >= today) {
-                        amountDaytotal += parseFloat(sale.amount);
-                        saleDaytotal++;
-                    }
-                });
-
+                let amountDaytotal = data.amountDaytotal;
+                let saleDaytotal = data.saleDaytotal;
                 let ticketPromedio = saleDaytotal > 0 ? (amountDaytotal / saleDaytotal) : 0;
 
                 // Formatear números a 2 decimales con coma
-                const formatNumber = (num) => num.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                const formatNumber = (num) => {
+                    let value = parseFloat(num) || 0;
+                    return value.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                }
 
                 $('.dashboard-kpi').eq(0).find('.kpi-value').text('Bs. ' + formatNumber(amountDaytotal));
                 $('.dashboard-kpi').eq(1).find('.kpi-value').text(saleDaytotal);
                 $('.dashboard-kpi').eq(2).find('.kpi-value').text('Bs. ' + formatNumber(ticketPromedio));
-                $('.dashboard-kpi').eq(3).find('.kpi-value').text(data.people.length);
+                $('.dashboard-kpi').eq(3).find('.kpi-value').text(data.customer);
 
                 // --- Actualizar Gráficos ---
 
