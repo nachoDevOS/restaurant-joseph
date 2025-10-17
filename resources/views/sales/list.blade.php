@@ -3,7 +3,8 @@
         <table id="dataTable" class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th style="text-align: center; width: 15%">Codigo</th>
+                    {{-- <th style="text-align: center; width: 15%">Codigo</th> --}}
+                    <th style="text-align: center; width: 5%">Codigo</th>
                     <th style="text-align: center">Cliente</th>
                     <th style="text-align: center">Monto de Venta</th>     
                     <th style="text-align: center">Ticket</th>
@@ -15,7 +16,7 @@
             <tbody>
                 @forelse ($data as $item)
                 <tr>
-                    <td>{{ $item->code }}</td>
+                    <td>{{ $item->id }}</td>
                     <td>
                         @if ($item->person)
                             @php

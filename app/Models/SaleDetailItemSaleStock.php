@@ -25,6 +25,21 @@ class SaleDetailItemSaleStock extends Model
         'deleteRole',
         'deleteObservation',
     ];
+
+    /**
+     * Pertenece a un detalle de venta.
+     */
+    public function saleDetail()
+    {
+        return $this->belongsTo(SaleDetail::class, 'saleDetail_id');
+    }
     
+    /**
+     * Pertenece a un lote de stock de producto.
+     */
+    public function itemSaleStock()
+    {
+        return $this->belongsTo(ItemSaleStock::class, 'itemSaleStock_id');
+    }
 
 }

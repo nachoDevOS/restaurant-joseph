@@ -37,6 +37,14 @@ class ItemSaleStock extends Model
         return $this->belongsTo(User::class, 'registerUser_id');
     }
 
+    /**
+     * Un lote de stock puede ser usado en muchos detalles de venta.
+     */
+    public function saleDetailItemSaleStocks()
+    {
+        return $this->hasMany(SaleDetailItemSaleStock::class, 'itemSaleStock_id');
+    }
+
 
 
 }

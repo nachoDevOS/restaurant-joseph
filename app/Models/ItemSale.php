@@ -40,5 +40,14 @@ class ItemSale extends Model
         return $this->hasMany(ItemSaleStock::class, 'itemSale_id');
     }
 
+    /**
+     * Un producto puede estar en muchos detalles de venta.
+     */
+    public function saleDetails()
+    {
+        // La clave foránea en la tabla 'sale_details' es 'item_id'
+        return $this->hasMany(SaleDetail::class, 'item_id');
+    }
+
 
 }
