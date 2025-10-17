@@ -1696,7 +1696,7 @@ class DataRowsTableSeeder extends Seeder
                 'edit' => 1,
                 'add' => 1,
                 'delete' => 0,
-                'details' => '{"options":{"":"--Seleccione una opci\\u00f3n--","Venta Con Stock":"Venta Con Stock","Venta Sin Stock":"Venta Sin Stock"},"display":{"width":2},"validation":{"rule":"required"}}',
+                'details' => '{"validation":{"rule":"required"},"options":{"Venta Sin Stock":"Venta Sin Stock","Venta Con Stock":"Venta Con Stock"},"display":{"width":2}}',
                 'order' => 6,
             ),
             105 => 
