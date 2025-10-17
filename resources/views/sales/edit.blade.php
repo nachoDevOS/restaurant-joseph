@@ -109,24 +109,26 @@
                                     <label for="observation">Detalle / Observación</label>
                                     <textarea name="observation" id="observation" class="form-control" rows="2">{{ $sale->observation }}</textarea>
                                 </div>
-
-                                <div class="form-group col-md-12">
-                                    <label for="person_id">Cliente</label>
-                                    <div class="input-group">
-                                        <select name="person_id" id="select-person_id" class="form-control"></select>
-                                        <span class="input-group-btn">
-                                            <button id="trash-person" class="btn btn-default" title="Quitar Cliente"
-                                                style="margin: 0px" type="button">
-                                                <i class="voyager-trash"></i>
-                                            </button>
-                                            <button class="btn btn-primary" title="Nuevo cliente"
-                                                data-target="#modal-create-person" data-toggle="modal" style="margin: 0px"
-                                                type="button">
-                                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                            </button>
-                                        </span>
+                                @if (setting('admin.customer'))      
+                                    <div class="form-group col-md-12">
+                                        <label for="person_id">Cliente</label>
+                                        <div class="input-group">
+                                            <select name="person_id" id="select-person_id" class="form-control"></select>
+                                            <span class="input-group-btn">
+                                                <button id="trash-person" class="btn btn-default" title="Quitar Cliente"
+                                                    style="margin: 0px" type="button">
+                                                    <i class="voyager-trash"></i>
+                                                </button>
+                                                <button class="btn btn-primary" title="Nuevo cliente"
+                                                    data-target="#modal-create-person" data-toggle="modal" style="margin: 0px"
+                                                    type="button">
+                                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                </button>
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
+
 
                                 @php
                                     $paymentType = 'Efectivo';
