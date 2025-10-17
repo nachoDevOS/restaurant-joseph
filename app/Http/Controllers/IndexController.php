@@ -198,6 +198,18 @@ class IndexController extends Controller
             ->orderBy('created_at', 'DESC')
             ->get();
 
+        $amountDaytotal = $sales->where('deleted_at', null)
+                ->filter(function ($sale) {
+                    return $sale->created_at->format('Y-m-d') === date('Y-m-d');
+                })
+                ->sum('amount');
+
+        $saleDaytotal = $sales->where('deleted_at', null)
+                ->filter(function ($sale) {
+                    return $sale->created_at->format('Y-m-d') === date('Y-m-d');
+                })
+                ->count();
+
         // calculamos el total de las ventas a mes
         foreach ($monthInteractive as $index => $monthData) {
             $amount = $sales->where('deleted_at', null)->filter(function ($sale) use ($monthData) {
@@ -218,7 +230,7 @@ class IndexController extends Controller
         // Para obtener las ventas del día de la semana 
         $weekDays = $this->generarDiasSemana(date('Y-m-d'), $sales);
 
-        $people = Person::where('deleted_at', null)->get();
+        $people = Person::where('deleted_at', null)->get()->count();//Para obtener la cantidad de clientes 
     
         return response()->json([
             'day' => $day,
@@ -226,7 +238,9 @@ class IndexController extends Controller
             'year' => $year,
             'monthInteractive' => $monthInteractive,
             'sales'=> $sales,
-            'people' => $people,
+            'amountDaytotal'=> $amountDaytotal,
+            'saleDaytotal'=>$saleDaytotal,
+            'customer' => $people,
             'productTop5Day' => $productTop5Day,
             'weekDays' => $weekDays,
 

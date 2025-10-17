@@ -58,29 +58,7 @@
     <div class="page-content container-fluid">
         @include('voyager::alerts')
         @include('voyager::dimmers')
-        @php
-            $sales = $global_index['sales'];
-            // dump($sales);
 
-            $amountDaytotal = $global_index['sales']
-                ->where('deleted_at', null)
-                ->filter(function ($sale) {
-                    return $sale->created_at->format('Y-m-d') === date('Y-m-d');
-                })
-                ->sum('amount');
-
-            $saleDaytotal = $global_index['sales']
-                ->where('deleted_at', null)
-                ->filter(function ($sale) {
-                    return $sale->created_at->format('Y-m-d') === date('Y-m-d');
-                })
-                ->count();
-
-            $customer = $global_index['people']->count();
-
-            $monthInteractive = $global_index['monthInteractive'];
-            // $monthInteractive = $global_index['monthInteractive'];
-        @endphp
         <!-- KPI Cards -->
         <div class="row">
             <div class="col-md-3">
@@ -89,7 +67,7 @@
                         <div class="kpi-icon">
                             <i class="voyager-dollar"></i>
                         </div>
-                        <h3 class="kpi-value">Bs. {{ number_format($amountDaytotal, 2, ',', '.') }}</h3>
+                        <h3 class="kpi-value">Bs. {{ number_format($global_index['amountDaytotal'], 2, ',', '.') }}</h3>
                         <p class="kpi-label">Ventas Total del Día</p>
                         {{-- <div class="kpi-trend trend-up">
                             <i class="voyager-up"></i> 12.5%
@@ -103,7 +81,7 @@
                         <div class="kpi-icon">
                             <i class="voyager-bag"></i>
                         </div>
-                        <h3 class="kpi-value">{{ $saleDaytotal }}</h3>
+                        <h3 class="kpi-value">{{ $global_index['saleDaytotal'] }}</h3>
                         <p class="kpi-label">Pedidos del Día</p>
                         {{-- <div class="kpi-trend trend-up">
                             <i class="voyager-up"></i> 5.2%
@@ -118,7 +96,7 @@
                             <i class="voyager-bar-chart"></i>
                         </div>
                         <h3 class="kpi-value">Bs.
-                            {{ $saleDaytotal > 0 ? number_format($amountDaytotal / $saleDaytotal, 2, ',', '.') : '0,00' }}</h3>
+                            {{ $global_index['saleDaytotal'] > 0 ? number_format($global_index['amountDaytotal'] / $global_index['saleDaytotal'], 2, ',', '.') : '0,00' }}</h3>
                         <p class="kpi-label">Ticket Promedio</p>
                         {{-- <div class="kpi-trend trend-up">
                             <i class="voyager-up"></i> 8.7%
@@ -132,7 +110,7 @@
                         <div class="kpi-icon">
                             <i class="voyager-person"></i>
                         </div>
-                        <h3 class="kpi-value">{{ $customer }}</h3>
+                        <h3 class="kpi-value">{{ $global_index['customer'] }}</h3>
                         <p class="kpi-label">Clientes</p>
                         {{-- <div class="kpi-trend trend-down">
                             <i class="voyager-down"></i> 3.1%
@@ -585,7 +563,7 @@
 
 
             // --- Preparación de datos iniciales para los gráficos ---
-            const monthData = @json($monthInteractive);
+            const monthData = @json($global_index['monthInteractive']);
             const ventasMensualesData = {
                 labels: monthData.map(item => item.month.substring(0, 3) + '-' + item.year),
                 datasets: [{
