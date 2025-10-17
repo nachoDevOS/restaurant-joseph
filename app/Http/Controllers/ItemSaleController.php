@@ -172,4 +172,21 @@ class ItemSaleController extends Controller
             return redirect()->route('voyager.item-sales.show', ['id'=>$id])->with(['message' => 'Ocurrió un error.', 'alert-type' => 'error']);
         }
     }
+
+    public function salesHistoryList(Request $request, $id)
+    {
+        $this->custom_authorize('read_item_sales');
+        $paginate = $request->paginate ?? 5;
+
+        $item = ItemSale::findOrFail($id);
+
+        $saleDetails = $item->saleDetails()
+            ->whereHas('sale', function ($q) {
+                $q->where('deleted_at', null);
+            })
+            ->orderBy('created_at', 'DESC')
+            ->paginate($paginate);
+
+        return view('parameters.item-sales.partials.sales-history-list', compact('saleDetails'));
+    }
 }

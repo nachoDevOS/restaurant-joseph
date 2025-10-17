@@ -202,48 +202,7 @@
                         <div class="row" style="min-height: 120px">
                             <div class="form-group col-md-12">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-hover" id="dataTable">
-                                        <thead>
-                                            <tr>
-                                                <th style="width:5px">N&deg;</th>
-                                                <th style="text-align: center">ID Venta</th>
-                                                <th style="text-align: center">Cliente</th>
-                                                <th style="text-align: center">Fecha</th>
-                                                <th style="text-align: center">Cantidad</th>
-                                                <th style="text-align: center">Precio</th>
-                                                <th style="text-align: center">Subtotal</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @php
-                                                $saleDetails = $item->saleDetails()->whereHas('sale', function($q){
-                                                    $q->where('deleted_at', null);
-                                                })->get();
-                                                $num = 1;
-                                            @endphp
-                                            @forelse ($saleDetails as $detail)
-                                                <tr>
-                                                    <td>{{ $num++ }}</td>
-                                                    <td style="text-align: center">{{ $detail->sale->id }}</td>
-                                                    <td>{{ optional($detail->sale->person)->last_name }} {{ optional($detail->sale->person)->first_name ?? 'Sin Cliente' }}</td>
-                                                    <td style="text-align: center">{{ date('d/m/Y H:i:s', strtotime($detail->sale->created_at)) }}</td>
-                                                    <td style="text-align: right">{{ $detail->quantity }}</td>
-                                                    <td style="text-align: right">{{ number_format($detail->price, 2, ',', '.') }}</td>
-                                                    <td style="text-align: right">{{ number_format($detail->quantity * $detail->price, 2, ',', '.') }}</td>
-                                                </tr>
-                                            @empty
-                                                <tr>
-                                                    <td colspan="7">
-                                                        <h5 class="text-center" style="margin-top: 50px">
-                                                            <img src="{{ asset('images/empty.png') }}" width="120px" alt="" style="opacity: 0.8">
-                                                            <br><br>
-                                                            No se han realizado ventas de este producto.
-                                                        </h5>
-                                                    </td>
-                                                </tr>
-                                            @endforelse
-                                        </tbody>
-                                    </table>
+                                    <div id="div-sales-history-results"></div>
                                 </div>
                             </div>
                         </div>
@@ -314,6 +273,23 @@
 
         function deleteItem(url){
             $('#delete_form').attr('action', url);
+        }
+
+        $(document).ready(function() {
+            list_sales_history();
+        });
+
+        function list_sales_history(page = 1) {
+            $('#div-sales-history-results').loading({message: 'Cargando...'});
+            let url = '{{ route("item-sales.ajax.sales-history", ["id" => $item->id]) }}';
+            $.ajax({
+                url: `${url}?paginate=5&page=${page}`,
+                type: 'get',
+                success: function(result){
+                    $("#div-sales-history-results").html(result);
+                    $('#div-sales-history-results').loading('toggle');
+                }
+            });
         }
     </script>
     

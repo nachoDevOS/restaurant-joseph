@@ -111,6 +111,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['loggin', 'system']], functi
     Route::get('item-sales/{id}', [ItemSaleController::class, 'show'])->name('voyager.item-sales.show');
     Route::post('item-sales/{id}/stock', [ItemSaleController::class, 'storeStock'])->name('item-sales-stock.store');
     Route::delete('item-sales/{id}/stock/{stock}', [ItemSaleController::class, 'destroyStock'])->name('item-sales-stock.destroy');
+    Route::get('item-sales/{id}/ajax/sales-history', [ItemSaleController::class, 'salesHistoryList'])->name('item-sales.ajax.sales-history');
 
 
     Route::get('item-inventories', [ItemInventoryController::class, 'index'])->name('voyager.item-inventories.index');
